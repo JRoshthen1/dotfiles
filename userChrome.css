@@ -1,0 +1,143 @@
+/*
+:root{
+    --tab-selected-bgcolor: #393743 !important;
+}
+.browser-toolbar{
+        background-color: #26252e !important;
+
+}
+*/
+.urlbar-input-box,.urlbarView-url{
+        font-family: Hack Nerd Font Mono, monospace !important;
+}
+.search-panel-one-offs-header, .search-panel-header{
+	display: none !important;
+}
+
+#tabbrowser-tabpanels[zen-split-view="true"] .browserSidebarContainer.deck-selected {
+  &:not(.zen-glance-overlay) {
+	outline: 1px solid color-mix(in srgb, var(--zen-primary-color) 35%, transparent) !important;
+  }
+}
+:root[zen-single-toolbar="true"]:not([customizing]) {
+  & #zen-appcontent-navbar-wrapper {
+    &[should-hide="true"] {
+      height: calc(var(--zen-element-separation) + 0.1px) !important;
+    }
+  }
+}
+.titlebar-buttonbox{
+	display: none !important;
+}
+/*** Remove items from image context menu ***/
+
+/* Email Image... */
+#context-sendimage,
+
+/* Set Image as Desktop Background... (and preceding separator) */
+#context-sep-setbackground, #context-setDesktopBackground,
+
+/* Inspect Accessibility Properties */
+#context-inspect-a11y
+{
+  display: none !important;
+}
+
+
+/*
+ *  Anoms12/Animations-plus 
+ *  A nice animation pack for Zen Browser
+ */
+
+
+.tab-background {
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, background 0.5s ease !important;
+}
+
+.tab-group-label-container {
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, background 0.5s ease !important;
+}
+
+
+/* For toolbarbutton-1 */
+.toolbarbutton-1 {
+
+    &:hover > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+      transition: background-color 0.3s ease-in-out,
+                  outline-color 0.3s ease-in-out; /* Smooth transition */
+    }
+
+    > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+      transition: background-color 0.3s ease-in-out,
+                  outline-color 0.3s ease-in-out;
+    }
+  }
+
+.identity-box-button {
+  transition: background-color 0.3s ease-in-out,
+              outline-color 1.3s ease-in-out;
+}
+
+
+
+
+/* Apply transition to urlbar controls, this is what I found worked...*/
+#reader-mode-button,
+#star-button-box,
+#zen-split-views-box,
+#pageActionButton,
+#urlbar-zoom-button,
+#shopping-sidebar-button,
+#translations-button,
+#picture-in-picture-button,
+#page-action-buttons,
+#urlbar-go-button,
+#urlbar-revert-button-container {
+  transition: background-color 0.3s ease-in-out,
+              outline-color 0.3s ease-in-out !important;
+}
+
+
+
+
+/* Animate the tab function icons */
+  .close-icon {
+    transition: background-color 0.3s ease-in-out; /* Smooth transition for background-color */
+  }
+
+
+
+  .tab-reset-button {
+    transition: background-color 0.3s ease-in-out; /* Smooth transition for background-color */
+  }
+
+/* This was not being applied properly by class for some reason */
+#tabs-newtab-button {
+    transition: background-color 0.3s ease-in-out; /* Smooth transition for background-color */
+}
+
+
+/* Other things that needed to be animated/transitioned */
+.subviewbutton {
+    transition: background-color 0.3s ease-in-out !important; /* Smooth transition for background-color */
+}
+
+.urlbarView-row-inner {
+    transition: background-color 0.3s ease-in-out !important; /* Smooth transition for background-color */
+}
+
+@keyframes pop-up {
+    0% {
+        transform: translateX(-50%) translateY(-20%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) translateY(0%);
+        opacity: 1;
+    }
+}
+
+#urlbar[zen-newtab="true"][breakout-extend="true"] {
+    animation: pop-up 0.3s ease forwards;
+}
+
