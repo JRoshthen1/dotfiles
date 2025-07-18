@@ -1,0 +1,439 @@
+/* =============================================================================
+   WAYBAR STYLESHEET - GRUVBOX THEME
+   A clean, compact design using the Gruvbox color palette
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   GRUVBOX COLOR PALETTE (for reference)
+   ----------------------------------------------------------------------------- */
+/*
+  Background:     #282828 (bg)
+  Background 1:   #3c3836 (bg1) 
+  Background 2:   #504945 (bg2)
+  Foreground:     #ebdbb2 (fg)
+  Gray:           #928374 (gray)
+  Red:            #fb4934 (red)
+  Green:          #b8bb26 (green)
+  Yellow:         #fabd2f (yellow)
+  Blue:           #83a598 (blue)
+  Purple:         #d3869b (purple)
+  Aqua:           #8ec07c (aqua)
+  Orange:         #fe8019 (orange)
+  
+  Standard padding: 2px 4px
+  Extended padding: 0px 10px
+  Standard margin: 4px
+  Border radius: 6px
+*/
+
+/* -----------------------------------------------------------------------------
+   GLOBAL SETTINGS
+   ----------------------------------------------------------------------------- */
+* {
+  font-family: "BlexMono Nerd Font Mono";
+  font-weight: 500;
+  font-size: 13px;
+  color: #ebdbb2; /* Gruvbox foreground */
+}
+
+/* Transparent Waybar background */
+#waybar {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+}
+
+/* -----------------------------------------------------------------------------
+   MODULE LAYOUTS & BACKGROUNDS
+   ----------------------------------------------------------------------------- */
+
+/* Standard modules with full rounded corners */
+#workspaces,
+#window,
+#tray,
+#custom-keyboard {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  padding: 2px 6px;
+  margin-top: 2px;
+  margin-right: 4px;
+  margin-bottom: 0;
+  margin-left: 4px;
+  border-radius: 4px;
+  border-width: 0px;
+  font-size: 10px;
+}
+
+/* Clock - right-side rounded */
+#clock {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 2px;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 2px 6px;
+  border-radius: 0 4px 4px 0;
+  border-width: 0px;
+}
+
+/* Left-side modules - rounded left edge */
+#network {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 2px;
+  padding: 2px 8px;
+  border-radius: 4px 0 0 4px;
+  border-width: 0px;
+}
+
+/* Middle modules - no rounded edges */
+#bluetooth,
+#battery,
+#pulseaudio,
+#backlight,
+#temperature,
+#memory,
+#cpu,
+#custom-gpu-power,
+#custom-audio-settings,
+#custom-audio-mute
+{
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 2px 6px;
+  border-width: 0px;
+  min-width: 18px;
+}
+
+#pulseaudio-slider,
+#backlight-slider {
+  background-color: rgba(60, 56, 54, 0.85);
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 2px 6px;
+  border-width: 0px;
+  min-width: 18px;
+} 
+
+#pulseaudio-slider slider,
+#backlight-slider slider{
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough,
+#backlight-slider trough {
+  min-height: 8px;
+  min-width: 80px;
+  border-radius: 6px;
+  background-color: #282828; /* bg - darker for contrast */
+}
+
+#pulseaudio-slider highlight,
+#backlight-slider highlight {
+  min-width: 4px;
+  border-radius: 6px;
+  background-color: #fabd2f; /* yellow - bright and visible */
+}
+#pulseaudio-slider highlight{
+  background-color: #8ec07c;
+}
+
+#custom-audio-settings,
+#custom-audio-mute{
+  font-size: 16px;
+}
+
+/* -----------------------------------------------------------------------------
+   POWER MANAGEMENT GROUP
+   ----------------------------------------------------------------------------- */
+
+/* Power management drawer toggle button - standalone with full radius */
+#custom-power-button {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 2px;
+  margin-bottom: 0;
+  margin-left: 2px;
+  padding: 2px 6px;
+  border-width: 0px;
+  border-radius: 4px;
+  min-width: 18px;
+}
+
+/* Lock button - first in power group, left rounded edge */
+#custom-lock {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 2px;
+  padding: 2px 6px;
+  border-radius: 4px 0 0 4px;
+  border-width: 0px;
+}
+
+/* Reboot button - middle button, no rounded edges */
+#custom-reboot {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 2px 6px;
+  border-width: 0px;
+  border-radius: 0;
+  min-width: 18px;
+}
+
+/* Power button - last in group, right rounded edge */
+#custom-power {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  margin-top: 2px;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 2px 6px;
+  border-width: 0px;
+  border-radius: 0 4px 4px 0;
+  min-width: 18px;
+}
+
+.power-hidden:hover,
+#custom-power-button:hover .power-hidden,
+#custom-reboot:hover .power-hidden,
+#custom-power:hover .power-hidden,
+.backlight-hidden:hover,
+#backlight:hover .backlight-hidden,
+#backlight-slider:hover .power-hidden,
+.audio-hidden:hover,
+#pulseaudio:hover .audio-hidden,
+#pulseaudio-slider:hover .audio-hidden {
+  opacity: 1;
+}
+
+/* -----------------------------------------------------------------------------
+   WORKSPACES (NIRI)
+   ----------------------------------------------------------------------------- */
+
+/* Default workspace buttons */
+#workspaces button {
+  background: transparent;
+  border: none;
+  color: #928374; /* Gruvbox gray */
+  padding: 1px 6px;
+  margin: 0 1px;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+/* Hovered workspace */
+#workspaces button:hover {
+  background-color: rgba(131, 165, 152, 0.2); /* Gruvbox aqua with transparency */
+  padding: 1px 6px;
+  margin: 0 1px;
+  border-radius: 6px;
+}
+
+/* Active workspace */
+#workspaces button.active {
+  background-color: #83a598; /* Gruvbox blue */
+  color: #282828; /* Gruvbox bg */
+  padding: 1px 6px;
+  margin: 0 1px;
+  border-radius: 6px;
+}
+
+/* Urgent workspace */
+#workspaces button.urgent {
+  background-color: #fb4934; /* Gruvbox red */
+  color: #282828; /* Gruvbox bg */
+  padding: 1px 6px;
+  margin: 0 1px;
+  border-radius: 6px;
+}
+
+/* -----------------------------------------------------------------------------
+   WINDOW TITLE
+   ----------------------------------------------------------------------------- */
+#window {
+  font-weight: 400;
+  font-style: italic;
+  color: #ebdbb2; /* Gruvbox foreground */
+}
+
+/* -----------------------------------------------------------------------------
+   CUSTOM MODULES - COLORS
+   ----------------------------------------------------------------------------- */
+
+/* Lock button */
+#custom-lock {
+  color: #8ec07c; /* Gruvbox aqua */
+}
+
+/* Reboot button */
+#custom-reboot {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+/* Power button */
+#custom-power {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* -----------------------------------------------------------------------------
+   SYSTEM MODULES - COLORS & STATES
+   ----------------------------------------------------------------------------- */
+
+/* Network */
+#network {
+  color: #8ec07c; /* Gruvbox aqua */
+}
+
+/* Battery */
+#battery {
+  color: #b8bb26; /* Gruvbox green */
+}
+
+#battery.warning {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+#battery.critical {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* Bluetooth */
+#bluetooth {
+  color: #83a598; /* Gruvbox blue */
+}
+
+/* Audio */
+#pulseaudio {
+  color: #8ec07c; /* Gruvbox aqua */
+}
+
+#pulseaudio.muted {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* Backlight */
+#backlight {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+/* GPU Power */
+#custom-gpu-power {
+  color: #83a598; /* Gruvbox blue */
+}
+
+/* Temperature */
+#temperature {
+  color: #fe8019; /* Gruvbox orange */
+}
+
+#temperature.warning {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+#temperature.critical {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* Memory */
+#memory {
+  color: #d3869b; /* Gruvbox purple */
+}
+
+#memory.warning {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+#memory.critical {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* CPU */
+#cpu {
+  color: #fe8019; /* Gruvbox orange */
+}
+
+#cpu.warning {
+  color: #fabd2f; /* Gruvbox yellow */
+}
+
+#cpu.critical {
+  color: #fb4934; /* Gruvbox red */
+}
+
+/* Clock */
+#clock {
+  color: #d3869b; /* Gruvbox purple */
+}
+
+/* System tray */
+#tray {
+  background-color: rgba(60, 56, 54, 0.85); /* bg1 with transparency */
+  padding: 2px 6px;
+}
+
+#tray > .passive {
+  padding: 1px 3px;
+  margin-top: 0;
+  margin-right: 1px;
+  margin-bottom: 0;
+  margin-left: 1px;
+}
+
+#tray > .needs-attention {
+  padding: 1px 3px;
+  margin-top: 0;
+  margin-right: 1px;
+  margin-bottom: 0;
+  margin-left: 1px;
+  background-color: #fb4934; /* Gruvbox red */
+  color: #282828; /* Gruvbox bg */
+  border-radius: 3px;
+}
+
+#tray > .active {
+  padding: 1px 3px;
+  margin-top: 0;
+  margin-right: 1px;
+  margin-bottom: 0;
+  margin-left: 1px;
+}
+
+/* -----------------------------------------------------------------------------
+   HOVER EFFECTS
+   ----------------------------------------------------------------------------- */
+#bluetooth:hover,
+#network:hover,
+#backlight:hover,
+#custom-audio-settings:hover,
+#custom-audio-mute:hover,
+#battery:hover,
+#pulseaudio:hover,
+#temperature:hover,
+#memory:hover,
+#cpu:hover,
+#clock:hover,
+#custom-lock:hover,
+#custom-reboot:hover,
+#custom-power:hover,
+#custom-power-button:hover,
+#window:hover {
+  background-color: rgba(80, 73, 69, 0.9); /* Gruvbox bg2 */
+}
+
+
