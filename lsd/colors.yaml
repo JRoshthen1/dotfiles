@@ -1,0 +1,80 @@
+### Ayu-Dark to Xterm 256 Color Mapping
+#| color-hex  | color-xterm |
+#|------------|-------------|
+#| #39BAE6    | 74 (SkyBlue3) |
+#| #FFB454    | 215 (SandyBrown) |
+#| #59C2FF    | 75 (SteelBlue1) |
+#| #AAD94C    | 149 (DarkOliveGreen3) |
+#| #95E6CB    | 116 (DarkSlateGray3) |
+#| #F07178    | 204 (IndianRed1) |
+#| #FF8F40    | 209 (Salmon1) |
+#| #E6B673    | 179 (LightGoldenrod3) |
+#| #ACB6BF    | 249 (Grey70) |
+#| #D2A6FF    | 183 (Plum2) |
+#| #F29668    | 209 (Salmon1) |
+#| #7FD962    | 113 (DarkOliveGreen3) |
+#| #73B8FF    | 75 (SteelBlue1) |
+#| #F26D78    | 204 (IndianRed1) |
+#| #BFBDB6    | 250 (Grey74) |
+#| #0D1017    | 233 (Grey7) |
+#| #131721    | 234 (Grey11) |
+#| #409FFF    | 75 (SteelBlue1) |
+#| #6C5980    | 60 (MediumPurple4) |
+#| #6C7380    | 243 (Grey46) |
+#| #6C7380    | 243 (Grey46) |
+#| #565B66    | 59 (Grey37) |
+#| #0B0E14    | 233 (Grey7) |
+#| #11151C    | 233 (Grey7) |
+#| #475266    | 240 (Grey35) |
+#| #0F131A    | 233 (Grey7) |
+#| #000000    | 16 (Black) |
+#| #E6B450    | 179 (LightGoldenrod3) |
+#| #D95757    | 167 (IndianRed) |
+
+# Ayu-Dark theme for lsd
+# Primary accent color: 215 (SandyBrown)
+
+user: 250
+group: 243
+permission:
+  read: 149
+  write: 215
+  exec: 204
+  exec-sticky: 183
+  no-access: 59
+  octal: 75
+  acl: 116
+  context: 116
+# Ayu String Focus theme
+date:
+  hour-old: 149 # DarkOliveGreen3
+  day-old: 155 # DarkOliveGreen2 lighter
+  older: 107 # DarkOliveGreen3 darker
+# Warm Sunset Gradient
+#date:
+#  hour-old: 214 # warm, fresh and vibrant
+#  day-old: 209 # softer orange-pink
+#  older: 175 # gentle pink-purple
+size:
+  none: 59
+  small: 116
+  medium: 74
+  large: 75
+inode:
+  valid: 113
+  invalid: 59
+links:
+  valid: 75
+  invalid: 59
+tree-edge: 243
+git-status:
+  default: 243
+  unmodified: 243
+  ignored: 59
+  new-in-index: 113
+  new-in-workdir: 113
+  typechange: 209
+  deleted: 167
+  renamed: 113
+  modified: 179
+  conflicted: 204

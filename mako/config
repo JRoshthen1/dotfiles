@@ -1,0 +1,59 @@
+# Basic appearance
+sort=-time
+layer=overlay
+anchor=top-right
+background-color=#282828
+text-color=#ebdbb2
+width=350
+height=110
+margin=10
+padding=10
+border-size=2
+border-color=#ebdbb3
+border-radius=1
+icons=1
+max-icon-size=48
+font=BlexMono Nerd Font Mono 11
+text-alignment=left
+
+# Behavior
+default-timeout=5000
+ignore-timeout=1
+max-visible=5
+max-history=20
+history=1
+markup=1
+actions=1
+
+# Format
+format=<b>%s</b>\n%b
+
+# Progress indicator
+progress-color=#b8bb26
+
+# Group settings
+group-by=app-name
+
+# Low urgency notifications
+[urgency=low]
+background-color=#3c3836
+border-color=#689d6a
+text-color=#a89984
+default-timeout=3000
+
+# Normal urgency notifications
+[urgency=normal]
+background-color=#282828
+border-color=#ebdbb0
+text-color=#ebdbb2
+
+# High urgency notifications
+[urgency=high]
+background-color=#3c1f1e
+border-color=#fb4934
+text-color=#fbf1c7
+default-timeout=0
+
+# Grouped notifications
+[grouped]
+format=<b>%s</b> (%g)\n%bckground-color=#2b2a33
