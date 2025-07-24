@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Check if argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <number_of_words>"
+    exit 1
+fi
+
+# Check if argument is a number
+if ! [[ "$1" =~ ^[0-9]+$ ]]; then
+    echo "Error: Please provide a valid number"
+    exit 1
+fi
+
+# Lorem ipsum word bank
+words=(
+    "lorem" "ipsum" "dolor" "sit" "amet" "consectetur" "adipiscing" "elit" 
+    "sed" "do" "eiusmod" "tempor" "incididunt" "ut" "labore" "et" "dolore" 
+    "magna" "aliqua" "enim" "ad" "minim" "veniam" "quis" "nostrud" 
+    "exercitation" "ullamco" "laboris" "nisi" "aliquip" "ex" "ea" "commodo" 
+    "consequat" "duis" "aute" "irure" "in" "reprehenderit" "voluptate" 
+    "velit" "esse" "cillum" "fugiat" "nulla" "pariatur" "excepteur" "sint" 
+    "occaecat" "cupidatat" "non" "proident" "sunt" "culpa" "qui" "officia" 
+    "deserunt" "mollit" "anim" "id" "est" "laborum"
+)
+
+# Generate requested number of words
+result=""
+for ((i=1; i<=$1; i++)); do
+    # Get random word from array
+    word=${words[$RANDOM % ${#words[@]}]}
+    
+    if [ $i -eq 1 ]; then
+        result="$word"
+    else
+        result="$result $word"
+    fi
+done
+
+echo "$result"

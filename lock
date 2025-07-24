@@ -1,0 +1,55 @@
+#!/bin/bash
+# Ayu Dark Theme Colors for i3lock-color
+
+alpha='dd'
+background='#0B0E14'    # Ayu dark background
+selection='#1B3A5B'     # Ayu selection background
+golden_yellow='#FFB454' # Ayu accent color
+bright_blue='#39BAE6'   # Ayu tag color
+orange='#FFB454'        # Ayu function color
+light_blue='#59C2FF'    # Ayu entity color
+green='#AAD94C'         # Ayu string color
+mint='#95E6CB'          # Ayu regexp color
+coral='#F07178'         # Ayu markup color
+orange_red='#FF8F40'    # Ayu keyword color
+purple='#D2A6FF'        # Ayu constant color
+red='#D95757'           # Ayu error color
+
+i3lock \
+  --insidever-color=$selection$alpha \
+  --insidewrong-color=$selection$alpha \
+  --inside-color=$background$alpha \
+  --ringver-color=$green$alpha \
+  --ringwrong-color=$red$alpha \
+  --ring-color=$orange$alpha \
+  --line-uses-ring \
+  --keyhl-color=$purple$alpha \
+  --bshl-color=$orange_red$alpha \
+  --separator-color=$selection$alpha \
+  --verif-color=$green \
+  --wrong-color=$red \
+  --modif-color=$red \
+  --layout-color=$bright_blue \
+  --date-color=$bright_blue \
+  --time-color=$orange \
+  --screen 1 \
+  --blur 1 \
+  --clock \
+  --indicator \
+  --time-str="%H:%M:%S" \
+  --date-str="%A %e %B %Y" \
+  --verif-text="Checking..." \
+  --wrong-text="Wrong pswd" \
+  --noinput="No Input" \
+  --lock-text="Locking..." \
+  --lockfailed="Lock Failed" \
+  --radius=120 \
+  --ring-width=10 \
+  --pass-media-keys \
+  --pass-screen-keys \
+  --pass-volume-keys \
+  --date-font="BlexMono Nerd Font Mono" \
+  --verif-font="BlexMono Nerd Font Mono" \
+  --layout-font="BlexMono Nerd Font Mono" \
+  --time-font="BlexMono Nerd Font Mono" \
+  --wrong-font="BlexMono Nerd Font Mono"

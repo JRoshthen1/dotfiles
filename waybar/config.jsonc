@@ -78,7 +78,7 @@
   },
   "custom/power": {
     "format": "󰐥",
-    "on-click": "zenity --question --text='Are you sure you want to power off?' --icon-name='system-shutdown' --title='Power Off System' && sleep 1 && systemctl poweroff",
+    "on-click": "zenity --question --text='Are you sure you want to power off?' --icon-name='system-shutdown' --title='Power Off System' && sleep 1 && loginctl poweroff",
     "tooltip": true,
     "tooltip-format": "Power Off"
   },
@@ -188,9 +188,9 @@
   },
   "clock": {
     "interval": 1,
-    "format": "󰃰 {:%a:%H:%M}",
+    "format": "󰃰 {:%a %H:%M}",
     "tooltip": true,
-    "tooltip-format": "{:L%Y-%m-%d, %A}"
+    "tooltip-format": "{:L%A, %d-%m-%Y}"
   },
   "tray": {
     "icon-size": 14,

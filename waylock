@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Gruvbox Dark Theme Swaylock Command
+# Colors based on the Gruvbox color scheme
+# Background: dark0_hard (#1d2021)
+# Foreground: light1 (#ebdbb2)
+# Red: bright_red (#fb4934)
+# Green: bright_green (#b8bb26)
+# Yellow: bright_yellow (#fabd2f)
+# Blue: bright_blue (#83a598)
+# Purple: bright_purple (#d3869b)
+# Orange: bright_orange (#fe8019)
+
+swaylock \
+  --color 1d2021 \
+  --inside-color 282828 \
+  --inside-clear-color 458588 \
+  --inside-caps-lock-color fabd2f \
+  --inside-ver-color d3869b \
+  --inside-wrong-color fb4934 \
+  --ring-color 3c3836 \
+  --ring-clear-color 689d6a \
+  --ring-caps-lock-color fe8019 \
+  --ring-ver-color b16286 \
+  --ring-wrong-color cc241d \
+  --line-color 00000000 \
+  --line-clear-color 00000000 \
+  --line-caps-lock-color 00000000 \
+  --line-ver-color 00000000 \
+  --line-wrong-color 00000000 \
+  --text-color ebdbb2 \
+  --text-clear-color 1d2021 \
+  --text-caps-lock-color 1d2021 \
+  --text-ver-color 1d2021 \
+  --text-wrong-color 1d2021 \
+  --key-hl-color b8bb26 \
+  --bs-hl-color fb4934 \
+  --caps-lock-key-hl-color fe8019 \
+  --caps-lock-bs-hl-color fb4934 \
+  --separator-color 00000000 \
+  --indicator-radius 100 \
+  --indicator-thickness 7 \
+  --indicator-idle-visible \
+  --font "BlexMono Nerd Font Mono" \
+  --font-size 24 \
+  --show-failed-attempts \
+  --show-keyboard-layout
