@@ -1,0 +1,220 @@
+From 669b92aa69ee4e102e84555b30cb4b589dbcf2da Mon Sep 17 00:00:00 2001
+From: jrosh
+Date: Sun, 10 Aug 2025 14:32:31 +0200
+Subject: [PATCH] expand animation
+
+---
+ main.c   | 18 ++++++++++--
+ render.c | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ render.h |  3 ++
+ 3 files changed, 105 insertions(+), 5 deletions(-)
+
+diff --git a/main.c b/main.c
+index 4562bda..738aa0e 100644
+--- a/main.c
++++ b/main.c
+@@ -673,6 +673,7 @@ process_event(struct context *ctx, enum event_type event)
+                 wayl_resized(wayl);
+             }
+ 
++            render_start_expand_animation(ctx->render);
+             wayl_ready_to_display(wayl);
+         }
+ 
+@@ -714,6 +715,7 @@ process_event(struct context *ctx, enum event_type event)
+             (!(conf->dmenu.enabled && conf->minimal_lines) ||
+              apps->count >= conf->lines))
+         {
++            render_start_expand_animation(ctx->render);
+             wayl_ready_to_display(wayl);
+         }
+         break;
+@@ -2218,6 +2220,7 @@ main(int argc, char *const *argv)
+     if (!conf.dmenu.exit_immediately_if_empty &&
+         !(conf.dmenu.enabled && conf.minimal_lines))
+     {
++        render_start_expand_animation(ctx.render);
+         wayl_ready_to_display(wayl);
+     }
+ 
+@@ -2225,8 +2228,19 @@ main(int argc, char *const *argv)
+ 
+     while (true) {
+         wayl_flush(wayl);
+-        if (!fdm_poll(fdm))
+-            break;
++
++        if (render_animation_active(ctx.render)) {
++            wayl_refresh(wayl);
++            // Force immediate poll return to keep animation smooth
++            // struct timespec timeout = {0, 16666666}; // 16ms for ~60fps
++            struct timespec timeout = {0, 6944444}; // 6.944ms for 144fps
++            nanosleep(&timeout, NULL);
++            if (!fdm_poll(fdm))
++                break;
++        } else {
++            if (!fdm_poll(fdm))
++                break;
++        }
+     }
+ 
+     if (wayl_update_cache(wayl))
+diff --git a/render.c b/render.c
+index 2d5645f..67439e3 100644
+--- a/render.c
++++ b/render.c
+@@ -51,6 +51,12 @@ struct thread_context {
+     int my_id;
+ };
+ 
++struct animation_state {
++    bool active;
++    uint64_t start_time;
++    uint64_t duration;
++};
++
+ struct render {
+     const struct config *conf;
+     struct fcft_font *font;
+@@ -60,7 +66,8 @@ struct render {
+     /* Cached fcft text runs */
+     struct fcft_text_run *prompt_text_run;
+     struct fcft_text_run *placeholder_text_run;
+-
++    struct animation_state animation;
++
+     /* Cached selection corners */
+     pixman_image_t *selection_corners;
+ 
+@@ -256,6 +263,44 @@ render_rounded_rectangle(pixman_image_t* dest, pixman_color_t* background,
+     }
+ }
+ 
++void
++render_start_expand_animation(struct render *render)
++{
++    struct timespec now;
++    clock_gettime(CLOCK_MONOTONIC, &now);
++    render->animation.start_time = now.tv_sec * 1000000000 + now.tv_nsec;
++    render->animation.active = true;
++}
++
++static float
++get_animation_progress(struct render *render)
++{
++    if (!render->animation.active)
++        return 1.0f;
++
++    struct timespec now;
++    clock_gettime(CLOCK_MONOTONIC, &now);
++    uint64_t current_time = now.tv_sec * 1000000000 + now.tv_nsec;
++
++    float progress = (float)(current_time - render->animation.start_time) / render->animation.duration;
++    if (progress >= 1.0f) {
++        progress = 1.0f;
++        render->animation.active = false;
++    } else {
++        // Animation still active, need another frame
++        // This will be handled by the main loop checking render_animation_active
++    }
++
++    // Smoothstep easing
++    return progress * progress * (3.0f - 2.0f * progress);
++}
++
++bool
++render_animation_active(const struct render *render)
++{
++    return render->animation.active;
++}
++
+ void
+ render_background(const struct render *render, struct buffer *buf)
+ {
+@@ -276,8 +321,33 @@ render_background(const struct render *render, struct buffer *buf)
+             max(render->x_margin,
+                 render->y_margin));
+ 
+-    render_rounded_rectangle(buf->pix[0], &bg, &border_color, radius, bw,
+-                             0, 0, buf->width, buf->height);
++    float progress = get_animation_progress((struct render*)render);
++
++    if (progress < 1.0f) {
++        // Simple scaling by adjusting coordinates
++        int center_x = buf->width / 2;
++        int center_y = buf->height / 2;
++        int scaled_width = buf->width * progress;
++        int scaled_height = buf->height * progress;
++        int x = center_x - scaled_width / 2;
++        int y = center_y - scaled_height / 2;
++
++        // Clear background first
++        pixman_color_t clear = {0, 0, 0, 0};
++        pixman_image_fill_rectangles(PIXMAN_OP_SRC, buf->pix[0], &clear, 1,
++                                   &(pixman_rectangle16_t){0, 0, buf->width, buf->height});
++
++        if (scaled_width > 0 && scaled_height > 0) {
++            // Scale both border width and radius proportionally
++            render_rounded_rectangle(buf->pix[0], &bg, &border_color,
++                                   radius * progress,
++                                   bw * progress,  // Scale border width too
++                                   x, y, scaled_width, scaled_height);
++        }
++    } else {
++        render_rounded_rectangle(buf->pix[0], &bg, &border_color, radius, bw,
++                                 0, 0, buf->width, buf->height);
++    }
+ }
+ 
+ static void
+@@ -548,6 +618,11 @@ void
+ render_prompt(struct render *render, struct buffer *buf,
+               const struct prompt *prompt, const struct matches *matches)
+ {
++    float progress = get_animation_progress((struct render*)render);
++    if (progress < 1.0f) {
++        // Skip rendering during animation to only show background scaling
++        return;
++    }
+     struct fcft_font *font = render->font;
+     assert(font != NULL);
+ 
+@@ -1485,6 +1560,11 @@ void
+ render_match_list(struct render *render, struct buffer *buf,
+                   const struct prompt *prompt, const struct matches *matches)
+ {
++    float progress = get_animation_progress((struct render*)render);
++    if (progress < 1.0f) {
++        // Skip rendering during animation to only show background scaling
++        return;
++    }
+     const size_t match_count = matches_get_count(matches);
+     const size_t selected = matches_get_match_index(matches);
+ 
+@@ -1666,6 +1746,9 @@ render_init(const struct config *conf, mtx_t *icon_lock)
+     }
+ 
+     LOG_INFO("using %hu render worker threads", render->workers.count);
++
++    render->animation.active = false;
++    render->animation.duration = 150000000;
+ 
+     return render;
+ 
+diff --git a/render.h b/render.h
+index 1e5922e..8259d05 100644
+--- a/render.h
++++ b/render.h
+@@ -14,6 +14,9 @@ struct render;
+ struct render *render_init(const struct config *conf, mtx_t *icon_lock);
+ void render_destroy(struct render *render);
+ 
++void render_start_expand_animation(struct render *render);
++bool render_animation_active(const struct render *render);
++
+ void render_initialize_colors(
+     struct render *render, const struct config *conf, bool gamma_correct);
+ 
+-- 
+2.50.1
+
