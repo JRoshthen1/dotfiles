@@ -236,6 +236,10 @@ spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
 spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
 
 spawn-at-startup "arch_news.sh"
+spawn-at-startup "days_notify.sh"
+
+spawn-at-startup "swayidle" "-w" "timeout" "300" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors"
+
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
@@ -264,8 +268,7 @@ animations {
 
 // https://variety4me.github.io/niri_docs/Configuration-Switch-Events/
 switch-events {
-    lid-close { spawn "waylock"; }
-    lid-open { spawn "brightnessctl" "s" "50%"; }
+    lid-close { spawn "waylock" "&&" "systemctl" "hibernate"; }
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -278,6 +281,9 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    match app-id=r#"Blanket$"#
+    match app-id=r#"Dialect$"#
+    match app-id=r#"com.example.ollama-chat"#
     open-floating true
 }
 
@@ -325,7 +331,9 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-
+    
+    XF86MonBrightnessUp  allow-when-locked=true { spawn "brightnessctl" "set" "10+%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "10-%"; }
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
@@ -535,6 +543,7 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    Mod+Print { spawn "sh" "-c" "wl-paste | swappy -f - ";} // markup the image
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -552,5 +561,5 @@ binds {
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
+    XF86Display { power-off-monitors; }
 }

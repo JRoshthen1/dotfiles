@@ -5,91 +5,60 @@
   "spacing": 0,
   "modules-left": [
     "niri/workspaces",
+    "custom/keyboard",
+    "custom/bitcoin",
     "tray",
-    "group/power-wrapper",
-    "custom/keyboard"
+    "bluetooth", 
+    "group/pulseaudio-wrapper",
+    "group/backlight-wrapper"
   ],
   "modules-center": ["niri/window"],
   "modules-right": [
     "battery",
-    "bluetooth", 
-    "group/pulseaudio-wrapper",
-    "group/backlight-wrapper",
     "custom/gpu-power",
     "temperature",
     "memory",
     "cpu",
-    "clock"
+    "clock",
+    "custom/power"
   ],
-"niri/workspaces": {
-  "format": "{icon}",
-  "format-icons": {
-    "1": "Ⅰ",
-    "2": "Ⅱ", 
-    "3": "Ⅲ",
-    "4": "Ⅳ",
-    "5": "Ⅴ",
-    "6": "Ⅵ",
-    "7": "Ⅶ",
-    "8": "Ⅷ",
-    "9": "Ⅸ",
-    "default": "󰊠"
-  }
-},
-  "group/power-wrapper": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 300,
-      "children-class": "power-hidden",
-      "transition-left-to-right": false,
-      "click-to-reveal": true
-    },
-    "modules": [
-      "custom/power-button",
-      "custom/lock",
-      "custom/reboot",
-      "custom/power"
-    ]
+  
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "Ⅰ",
+      "2": "Ⅱ", 
+      "3": "Ⅲ",
+      "4": "Ⅳ",
+      "5": "Ⅴ",
+      "6": "Ⅵ",
+      "7": "Ⅶ",
+      "8": "Ⅷ",
+      "9": "Ⅸ",
+      "default": "󰊠"
+    }
   },
-    
-  "niri/window": {
-    "format": "{title}",
-    "max-length": 50,
-    "tooltip": false
-  },
-
-  "custom/power-button": {
+  
+  "custom/power": {
     "format": "󰐥",
+    "on-click": "~/.local/bin/power-menu.sh",
     "tooltip": true,
     "tooltip-format": "Power Menu"
   },
-  "custom/lock": {
-    "format": "󰍁",
-    "on-click": "/home/jrosh/.local/bin/waylock",
-    "tooltip": true,
-    "tooltip-format": "Lock Screen"
-  },
-  "custom/reboot": {
-    "format": "󰜉",
-    "on-click": "zenity --question --text='Are you sure you want to reboot?' --icon-name='system-reboot' --title='Reboot System' && sleep 1 && systemctl reboot --force",
-    "tooltip": true,
-    "tooltip-format": "Reboot"
-  },
-  "custom/power": {
-    "format": "󰐥",
-    "on-click": "zenity --question --text='Are you sure you want to power off?' --icon-name='system-shutdown' --title='Power Off System' && sleep 1 && systemctl poweroff --force",
-    "tooltip": true,
-    "tooltip-format": "Power Off"
-  },
 
   "custom/keyboard": {
-      "format": "{}",
-      "exec": "niri msg keyboard-layouts | grep '\\*' | awk '{print $3}' | cut -d'(' -f1",
-      "on-click": "niri msg action switch-layout next",
-      "interval": 1,
-      "tooltip": false
+    "format": "{}",
+    "exec": "niri msg keyboard-layouts | grep '\\*' | awk '{print $3}' | cut -d'(' -f1",
+    "on-click": "niri msg action switch-layout next",
+    "interval": 1,
+    "tooltip": false
   },
-
+    "custom/bitcoin": {
+        "exec": "~/.local/bin/bitcoin.sh",
+        "format": "{}",
+        "interval": 180,  // Update every 5 minutes
+        "return-type": "json"
+    },
   "network": {
     "format-wifi": "󰤨 {essid}",
     "format-ethernet": "󰈀 Wired",
@@ -99,6 +68,7 @@
     "format-alt": "󰤨 {signalStrength}%",
     "interval": 1
   },
+  
   "battery": {
     "states": {
       "warning": 30,
@@ -116,7 +86,7 @@
     "drawer": {
       "transition-duration": 300,
       "children-class": "audio-hidden",
-      "transition-left-to-right": false,
+      "transition-left-to-right": true,
       "click-to-reveal": true
     },
     "modules": [
@@ -126,9 +96,10 @@
       "custom/audio-settings"
     ]
   },
+  
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "󰖁 0%",
+    "format": "{icon}",
+    "format-muted": "󰖁",
     "format-icons": {
       "headphone": "󰋋",
       "hands-free": "󰋎",
@@ -138,29 +109,30 @@
       "car": "󰄋",
       "default": ["󰕿", "󰖀", "󰕾"]
     },
-    // Can't use on click events because it won't trigger drawer
-    //"on-click": "pavucontrol",
-    //"on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "tooltip": true,
     "tooltip-format": "Volume: {volume}%"
   },
+  
   "pulseaudio/slider": {
     "min": 0,
     "max": 100,
     "orientation": "horizontal"
   },
+  
   "custom/audio-settings": {
     "format": "",
     "tooltip": true,
     "tooltip-format": "Audio Settings",
     "on-click": "pavucontrol"
   },
+  
   "custom/audio-mute": {
     "format": "󰖁",
     "tooltip": true,
     "tooltip-format": "Toggle Mute",
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   },
+  
   "temperature": {
     "critical-threshold": 80,
     "format": "{icon} {temperatureC}°C",
@@ -169,6 +141,7 @@
     "tooltip": true,
     "tooltip-format": "CPU Temperature: {temperatureC}°C"
   },
+  
   "custom/gpu-power": {
     "format": " {}W",
     "exec": "nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits",
@@ -176,21 +149,25 @@
     "tooltip-format": "GPU Power: {} Watts",
     "interval": 5
   },
+  
   "memory": {
-    "format": "󰍛 {used:0.1f}G/{total:0.1f}G",
+    "format": "󰛨 {used:0.1f}G/{total:0.1f}G",
     "tooltip": true,
     "tooltip-format": "Memory: {used:0.2f}G/{total:0.2f}G"
   },
+  
   "cpu": {
     "format": "󰻠 {usage}%",
     "tooltip": true
   },
+  
   "clock": {
     "interval": 1,
     "format": "󰃰 {:%d.%m %a %H:%M}",
     "tooltip": true,
     "tooltip-format": "{:L%A, %d-%m-%Y}"
   },
+  
   "tray": {
     "icon-size": 14,
     "spacing": 4
@@ -201,7 +178,7 @@
     "drawer": {
       "transition-duration": 300,
       "children-class": "backlight-hidden",
-      "transition-left-to-right": false,
+      "transition-left-to-right": true,
       "click-to-reveal": true
     },
     "modules": [
@@ -209,12 +186,13 @@
       "backlight/slider"
     ]
   },
+  
   "backlight": {
     "device": "intel_backlight",
-    "format": "{icon} {percent}%",
+    "format": "{icon}",
     "tooltip": true,
     "tooltip-format": "Brightness: {percent}%",
-    "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"]
+    "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"]
   },
 
   "backlight/slider": {
@@ -223,6 +201,7 @@
     "orientation": "horizontal",
     "device": "intel_backlight"
   },
+  
   "bluetooth": {
     "format": "󰂯 {status}",
     "format-connected": "󰂱 {device_alias}",
