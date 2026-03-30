@@ -6,9 +6,10 @@
   "modules-left": [
     "niri/workspaces",
     "custom/keyboard",
-    "custom/bitcoin",
+ //   "custom/bitcoin",
     "tray",
     "bluetooth", 
+    "custom/mail",
     "group/pulseaudio-wrapper",
     "group/backlight-wrapper"
   ],
@@ -53,12 +54,14 @@
     "interval": 1,
     "tooltip": false
   },
-    "custom/bitcoin": {
-        "exec": "~/.local/bin/bitcoin.sh",
-        "format": "{}",
-        "interval": 180,  // Update every 5 minutes
-        "return-type": "json"
-    },
+
+  "custom/bitcoin": {
+      "exec": "~/.local/bin/bitcoin.sh",
+      "format": "{}",
+      "interval": 180,  // Update every 5 minutes
+      "return-type": "json"
+  },
+
   "network": {
     "format-wifi": "󰤨 {essid}",
     "format-ethernet": "󰈀 Wired",
@@ -67,6 +70,15 @@
     "format-disconnected": "󰤭 Disconnected",
     "format-alt": "󰤨 {signalStrength}%",
     "interval": 1
+  },
+
+  "custom/mail": {
+    "exec": "~/.local/bin/mail.sh",
+    "interval": 300,
+    "format": "<span font_size='14pt' rise='-2500'></span> {}",
+    "on-click": "thunderbird",
+    "tooltip": "{} Unread messages",
+    "return-type": ""
   },
   
   "battery": {

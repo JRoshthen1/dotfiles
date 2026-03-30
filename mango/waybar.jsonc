@@ -1,0 +1,213 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 24,
+    "spacing": 0,
+    "modules-left": [
+        "ext/workspaces",
+        "tray",
+        "bluetooth",
+        "custom/mail",
+        "group/pulseaudio-wrapper",
+        "group/backlight-wrapper"
+    ],
+    "ext/workspaces": {
+        "format": "{icon}",
+        "ignore-hidden": true,
+        "on-click": "activate",
+        "on-click-right": "deactivate",
+        "sort-by-id": true
+    },
+    "dwl/window": {
+        "format": "{title}"
+    },
+    "modules-center": [
+        "dwl/window"
+    ],
+    "modules-right": [
+        "battery",
+        "custom/gpu-power",
+        "temperature",
+        "memory",
+        "cpu",
+        "clock",
+        "custom/power"
+    ],
+    "custom/power": {
+        "format": "󰐥",
+        "on-click": "~/.local/bin/power-menu.sh",
+        "tooltip": true,
+        "tooltip-format": "Power Menu"
+    },
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 Wired",
+        "tooltip-format": "󰅧 {bandwidthUpBytes}  󰅢 {bandwidthDownBytes}",
+        "format-linked": "󱘖 {ifname} (No IP)",
+        "format-disconnected": "󰤭 Disconnected",
+        "format-alt": "󰤨 {signalStrength}%",
+        "interval": 1
+    },
+    "custom/mail": {
+        "exec": "~/.local/bin/mail.sh",
+        "interval": 1000,
+        "format": "<span font_size='14pt' rise='-2500'></span> {}",
+        "on-click": "thunderbird",
+        "tooltip": "{} Unread messages",
+        "return-type": ""
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "interval": 1,
+        "format-icons": [
+            "󰂎",
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ],
+        "tooltip": true
+    },
+    "group/pulseaudio-wrapper": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "audio-hidden",
+            "transition-left-to-right": true,
+            "click-to-reveal": true
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider",
+            "custom/audio-mute",
+            "custom/audio-settings"
+        ]
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "󰄜",
+            "portable": "󰄜",
+            "car": "󰄋",
+            "default": [
+                "󰕿",
+                "󰖀",
+                "󰕾"
+            ]
+        },
+        "tooltip": true,
+        "tooltip-format": "Volume: {volume}%"
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+    "custom/audio-settings": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "Audio Settings",
+        "on-click": "pavucontrol"
+    },
+    "custom/audio-mute": {
+        "format": "󰖁",
+        "tooltip": true,
+        "tooltip-format": "Toggle Mute",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": [
+            "󰜗",
+            "󱃃",
+            "󰸁"
+        ],
+        "interval": 5,
+        "tooltip": true,
+        "tooltip-format": "CPU Temperature: {temperatureC}°C"
+    },
+    "custom/gpu-power": {
+        "format": " {}W",
+        "exec": "nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits",
+        "tooltip": true,
+        "tooltip-format": "GPU Power: {} Watts",
+        "interval": 5
+    },
+    "memory": {
+        "format": "󰛨 {used:0.1f}G/{total:0.1f}G",
+        "tooltip": true,
+        "tooltip-format": "Memory: {used:0.2f}G/{total:0.2f}G"
+    },
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "tooltip": true
+    },
+    "clock": {
+        "interval": 1,
+        "format": "󰃰 {:%d.%m %a %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "{:L%A, %d-%m-%Y}"
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing": 4
+    },
+    "group/backlight-wrapper": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "backlight-hidden",
+            "transition-left-to-right": true,
+            "click-to-reveal": true
+        },
+        "modules": [
+            "backlight",
+            "backlight/slider"
+        ]
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon}",
+        "tooltip": true,
+        "tooltip-format": "Brightness: {percent}%",
+        "format-icons": [
+            "󰃞",
+            "󰃟",
+            "󰃝",
+            "󰃠"
+        ]
+    },
+    "backlight/slider": {
+        "min": 1,
+        "max": 100,
+        "orientation": "horizontal",
+        "device": "intel_backlight"
+    },
+    "bluetooth": {
+        "format": "󰂯 {status}",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "bluetoothctl power off",
+        "on-click-right": "alacritty --class floating -e bluetuith"
+    }
+}

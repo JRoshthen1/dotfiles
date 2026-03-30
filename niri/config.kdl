@@ -101,6 +101,7 @@ input {
     position x=1280 y=0
 }
 
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
@@ -235,7 +236,6 @@ spawn-at-startup "wl-clip-persist" "--clipboard" "regular"
 spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
 spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
 
-spawn-at-startup "arch_news.sh"
 spawn-at-startup "days_notify.sh"
 
 spawn-at-startup "swayidle" "-w" "timeout" "300" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors"
@@ -319,6 +319,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    //Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi -show drun -config ~/.config/rofi/themes/theme.rasi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "waylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -537,7 +538,7 @@ binds {
     // a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
+    Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Print { screenshot; }

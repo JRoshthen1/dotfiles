@@ -1,0 +1,82 @@
+# ayu-dark.toml
+
+[colors.primary]
+background            = "#0A0E14"
+foreground            = "#B3B1AD"
+dim_foreground        = "#B3B1AD"
+bright_foreground     = "#B3B1AD"
+
+[colors.cursor]
+text                  = "#0A0E14"
+cursor                = "#B3B1AD"
+
+[colors.vi_mode_cursor]
+text                  = "#0A0E14"
+cursor                = "#2E5CB8"
+
+[colors.search.matches]
+foreground            = "#0A0E14"
+background            = "#C7C7C7"
+
+[colors.search.focused_match]
+foreground            = "#0A0E14"
+background            = "#91B362"
+
+[colors.hints.start]
+foreground            = "#0A0E14"
+background            = "#F9AF4F"
+
+[colors.hints.end]
+foreground            = "#0A0E14"
+background            = "#B3B1AD"
+
+[colors.line_indicator]
+#foreground            = "None"
+#background            = "None"
+
+[colors.footer_bar]
+foreground            = "#0A0E14"
+background            = "#C7C7C7"
+
+[colors.selection]
+text                  = "#0A0E14"
+background            = "#B3B1AD"
+
+[colors.normal]
+black                 = "#01060E"
+red                   = "#EA6C73"
+green                 = "#91B362"
+yellow                = "#F9AF4F"
+blue                  = "#2E5CB8"
+magenta               = "#FAE994"
+cyan                  = "#90E1C6"
+white                 = "#C7C7C7"
+
+[colors.bright]
+black                 = "#686868"
+red                   = "#F07178"
+green                 = "#A2D95B"
+yellow                = "#FFB454"
+blue                  = "#4A7BC8"
+magenta               = "#FFEE99"
+cyan                  = "#95E6CB"
+white                 = "#FFFFFF"
+
+[colors.dim]
+black                 = "#01060E"
+red                   = "#EA6C73"
+green                 = "#91B362"
+yellow                = "#F9AF4F"
+blue                  = "#2E5CB8"
+magenta               = "#FAE994"
+cyan                  = "#90E1C6"
+white                 = "#C7C7C7"
+
+
+[colors]
+indexed_colors = [
+  { index = 16, color = "#F9AF4F" },
+  { index = 17, color = "#B3B1AD" },
+]
+
+draw_bold_text_with_bright_colors = true
