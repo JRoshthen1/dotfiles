@@ -1,12 +1,7 @@
 /* =============================================================================
    WAYBAR STYLESHEET - GRUVBOX THEME
-   Clean, compact design using the Gruvbox color palette
-   Updated for Waybar 0.13.0+
    ============================================================================= */
 
-/* -----------------------------------------------------------------------------
-   GLOBAL SETTINGS
-   ----------------------------------------------------------------------------- */
 * {
   font-family: "BlexMono Nerd Font Mono";
   font-weight: 500;
@@ -20,241 +15,203 @@
 }
 
 /* -----------------------------------------------------------------------------
-   MODULE LAYOUTS & BACKGROUNDS
+   LEFT SIDE
    ----------------------------------------------------------------------------- */
 
-/* Standard modules with rounded corners */
-#workspaces,
-#window,
-#tray,
-#custom-keyboard,
-#bluetooth, 
-#custom-mail,
-#custom-bitcoin {
-  background-color: rgba(60, 56, 54, 0.85);
-  padding: 2px 6px;
-  margin: 2px 4px 0;
-  border-radius: 4px;
-}
-
-#custom-keyboard,
-#bluetooth {
-  font-size: 10px;
-}
-
-/* Drawer wrapper modules */
-#backlight-wrapper,
-#pulseaudio-wrapper {
-  background-color: rgba(60, 56, 54, 0.85);
-  padding: 0 8px 0 10px;
-  margin: 2px 4px 0 4px;
-  border-radius: 4px;
-}
-#backlight,
-#pulseaudio{font-size: 1.4rem; padding-right: 4px;}
-
-#custom-audio-settings,
-#custom-audio-mute{
-  padding: 0px 12px;
-}
-
-/* Clock - right edge */
-#custom-power {
-  background-color: rgba(60, 56, 54, 0.85);
-  margin: 2px 2px 0 0;
-  padding: 2px 12px;
-  border-radius: 0 4px 4px 0;
-  font-size: 14px;
-}
-
-/* Battery - left edge */
-#battery {
-  background-color: rgba(60, 56, 54, 0.85);
-  margin: 2px 0 0 2px;
-  padding: 2px 8px;
-  border-radius: 4px 0 0 4px;
-}
-
-/* Middle modules - no rounded edges */
-#temperature,
-#memory,
-#cpu,
-#clock,
-#custom-gpu-power {
-  background-color: rgba(60, 56, 54, 0.85);
-  margin: 2px 0 0;
-  padding: 2px 6px;
-  min-width: 18px;
-}
-
-/* Audio settings icons */
-#custom-audio-settings,
-#custom-audio-mute {
-  font-size: 16px;
-}
-
-/* -----------------------------------------------------------------------------
-   SLIDER STYLING - PROPER CSS NODES
-   ----------------------------------------------------------------------------- */
-
-/* Slider containers */
-#pulseaudio-slider,
-#backlight-slider {
-  margin: 2px 0 0;
-  padding: 2px 6px;
-  min-width: 18px;
-}
-
-/* Hide the actual slider handle */
-#pulseaudio-slider slider,
-#backlight-slider slider {
-  min-height: 0;
-  min-width: 0;
-  opacity: 0;
+#workspaces {
+  background-color: rgba(44, 42, 41, 0.85);
   background: transparent;
   border: none;
-  box-shadow: none;
 }
 
-/* Trough - the unfilled background */
-#pulseaudio-slider trough,
-#backlight-slider trough {
-  min-height: 8px;
-  min-width: 80px;
-  border-radius: 6px;
-  background-color: #282828;
-}
-
-/* Highlight - the filled portion */
-#backlight-slider highlight {
-  min-width: 4px;
-  min-height: 8px;
-  border-radius: 6px;
-  background-color: #fabd2f;
-}
-
-#pulseaudio-slider highlight {
-  min-width: 4px;
-  min-height: 8px;
-  border-radius: 6px;
-  background-color: #8ec07c;
-}
-
-/* Drawer reveal on hover */
-.backlight-hidden,
-.audio-hidden {
-  transition: opacity 300ms;
-}
-
-/* -----------------------------------------------------------------------------
-   WORKSPACES (NIRI)
-   ----------------------------------------------------------------------------- */
-
-/* Workspace buttons default state */
 #workspaces button {
   background: transparent;
   border: none;
-  color: #928374;
-  padding: 1px 6px;
-  margin: 0 1px;
-  font-weight: 500;
   border-radius: 0;
+  color: #928374;
+  padding: 0 4px;
+  font-weight: 500;
   transition: all 200ms ease;
 }
 
-/* Hovered workspace */
 #workspaces button:hover {
   background-color: rgba(131, 165, 152, 0.2);
-  padding: 1px 6px;
-  margin: 0 1px;
-  border-radius: 6px;
 }
 
-/* Active workspace - clear distinct styling */
 #workspaces button.active {
   background-color: #83a598;
-  color: #282828;
-  padding: 1px 6px;
-  margin: 0 1px;
-  border-radius: 6px;
-  font-weight: 600;
 }
 
-/* Urgent workspace */
 #workspaces button.urgent {
   background-color: #fb4934;
   color: #282828;
-  padding: 1px 6px;
-  margin: 0 1px;
-  border-radius: 6px;
 }
 
-/* Empty workspace styling */
 #workspaces button.empty {
   color: #665c54;
 }
 
 /* -----------------------------------------------------------------------------
-   WINDOW TITLE
+   MPRIS — standalone pill, separated from the strip
    ----------------------------------------------------------------------------- */
-#window {
-  font-weight: 400;
+
+#mpris {
+  background-color: rgba(44, 42, 41, 0.85);
+  margin: 0;
+  padding: 0px 12px;
+  color: #a89984;
   font-style: italic;
-  color: #ebdbb2;
 }
 
 /* -----------------------------------------------------------------------------
-   SYSTEM MODULES - COLORS & STATES
+   RIGHT STRIP — all connected, no gaps
    ----------------------------------------------------------------------------- */
+#custom-mail,
+#custom-keyboard,
+#custom-outputs-toggle,
+#custom-stats-toggle,
+#battery,
+#clock,
+#custom-power
+{
+  background-color: rgba(44, 42, 41, 0.85);
+  margin: 0;
+  padding: 0px 10px;
+}
 
-/* Network */
-#network {
+#tray{
+  background-color: rgba(44, 42, 41, 0.85);
+  margin: 0;
+  padding: 0px 4px;
+}
+
+#custom-stats-toggle,
+#custom-outputs-toggle{
+ font-size: 16px;
+}
+/* Left cap */
+/* #custom-mail {
+  letter-spacing: -12px;
+} */
+
+/* Right cap */
+#clock {
   color: #8ec07c;
 }
 
-/* Battery states */
-#battery {
-  color: #b8bb26;
+/* -----------------------------------------------------------------------------
+   GROUP INNER ELEMENTS — transparent, group container provides background
+   ----------------------------------------------------------------------------- */
+#custom-gpu-power,
+#temperature,
+#memory,
+#cpu {
+  background: transparent;
+  background-color: rgba(44, 42, 41, 0.85);
+  padding: 0px 4px;
 }
 
-#battery.warning {
-  color: #fabd2f;
-}
-
-#battery.critical {
-  color: #fb4934;
-  animation: blink 1s ease-in-out infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.5;
-  }
-}
-
-/* Audio */
-#pulseaudio {
-  /* color: #8ec07c; */
-  color: #ebdbb2;
-}
-
-#pulseaudio.muted {
-  color: #fb4934;
-}
-
-/* Backlight */
-/* #backlight {
-  color: #fabd2f;
-} */
-
-/* GPU Power */
 #custom-gpu-power {
   color: #83a598;
 }
 
-/* Temperature states */
 #temperature {
   color: #fe8019;
+}
+
+#memory {
+  color: #d3869b;
+}
+
+#cpu {
+  color: #fe8019;
+}
+
+#battery {
+  color: #b8bb26;
+  padding: 0 6px;
+}
+
+#custom-keyboard {
+  font-size: 12px;
+}
+
+#pulseaudio,
+#custom-sound-settings,
+#backlight
+{
+  background-color: rgba(44, 42, 41, 0.85);
+  font-size: 17px;
+}
+#pulseaudio,
+#custom-sound-settings
+{
+  padding: 0 10px;
+}
+
+/* -----------------------------------------------------------------------------
+   SLIDERS
+   ----------------------------------------------------------------------------- */
+
+#pulseaudio-slider,
+#backlight-slider {
+  padding: 0 6px;
+  min-width: 18px;
+  background-color: rgba(44, 42, 41, 0.85);
+}
+
+#pulseaudio-slider trough,
+#backlight-slider trough {
+  min-height: 3px;
+  min-width: 120px;
+  background-color: rgba(131, 165, 152, 0.2);
+}
+
+#backlight-slider slider {
+  background-image: none;
+  min-height: 0px;
+  border-radius: 4px;
+  min-width: 0;
+  border: none;
+  box-shadow: none;
+}
+
+#backlight-slider trough highlight {
+  background-image: none;
+  background-color: rgba(255, 212, 20, 0.85);
+}
+
+#pulseaudio-slider slider {
+  background-image: none;
+  min-height: 0px;
+  border-radius: 4px;
+  min-width: 0;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough highlight {
+  background-image: none;
+  background-color: rgba(0, 255, 157, 0.7);
+}
+
+/* -----------------------------------------------------------------------------
+   STATE STYLES
+   ----------------------------------------------------------------------------- */
+
+#battery.warning {
+  background-color: rgba(250, 189, 47, 0.8);
+  color: rgb(44, 42, 41);
+}
+
+#battery.critical {
+  background-color: rgba(202, 0, 0, 0.8);
+  color: rgb(235, 235, 235);
+  animation: blink-bg 1500ms ease-in-out infinite;
+}
+
+@keyframes blink-bg {
+  50% { background-color: rgba(44, 42, 41, 0.85); }
 }
 
 #temperature.warning {
@@ -265,77 +222,33 @@
   color: #fb4934;
 }
 
-/* Memory states */
-#memory {
-  color: #d3869b;
-}
-
-#memory.warning {
-  color: #fabd2f;
-}
-
-#memory.critical {
+#pulseaudio.muted {
   color: #fb4934;
 }
 
-/* CPU states */
-#cpu {
-  color: #fe8019;
-}
-
+#memory.warning,
 #cpu.warning {
   color: #fabd2f;
 }
 
+#memory.critical,
 #cpu.critical {
   color: #fb4934;
-}
-
-/* Clock */
-#clock {
-  color: #8ec07c;
-}
-
-/* -----------------------------------------------------------------------------
-   SYSTEM TRAY
-   ----------------------------------------------------------------------------- */
-#tray {
-  background-color: rgba(60, 56, 54, 0.85);
-  padding: 2px 6px;
-}
-
-#tray > .passive {
-  padding: 1px 3px;
-  margin: 0 1px;
-}
-
-#tray > .active {
-  padding: 1px 3px;
-  margin: 0 1px;
-}
-
-#tray > .needs-attention {
-  padding: 1px 3px;
-  margin: 0 1px;
-  background-color: #fb4934;
-  color: #282828;
-  border-radius: 3px;
 }
 
 /* -----------------------------------------------------------------------------
    HOVER EFFECTS
    ----------------------------------------------------------------------------- */
-#bluetooth:hover,
-#network:hover,
-#custom-audio-settings:hover,
-#custom-audio-mute:hover,
-#battery:hover,
-#temperature:hover,
-#memory:hover,
-#cpu:hover,
-#clock:hover,
+
 #custom-power:hover,
-#window:hover {
+#clock:hover,
+#custom-keyboard:hover,
+#custom-mail:hover,
+#custom-outputs-toggle:hover,
+#custom-stats-toggle:hover,
+#pulseaudio:hover,
+#custom-sound-settings:hover,
+#mpris:hover {
   background-color: rgba(80, 73, 69, 0.9);
   transition: background-color 200ms ease;
 }

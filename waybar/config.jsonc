@@ -1,34 +1,28 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 24,
+  "height": 20,
   "spacing": 0,
   "modules-left": [
-    "niri/workspaces",
-    "custom/keyboard",
- //   "custom/bitcoin",
-    "tray",
-    "bluetooth", 
-    "custom/mail",
-    "group/pulseaudio-wrapper",
-    "group/backlight-wrapper"
+    "niri/workspaces"
   ],
-  "modules-center": ["niri/window"],
   "modules-right": [
+    "mpris",
+    "custom/mail",
+    "custom/keyboard",
+    "tray",
+    "group/outputs",
+    "group/stats",
     "battery",
-    "custom/gpu-power",
-    "temperature",
-    "memory",
-    "cpu",
     "clock",
     "custom/power"
   ],
-  
+
   "niri/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "1": "Ⅰ",
-      "2": "Ⅱ", 
+      "1": "󱂈",
+      "2": "󱪽", 
       "3": "Ⅲ",
       "4": "Ⅳ",
       "5": "Ⅴ",
@@ -39,7 +33,7 @@
       "default": "󰊠"
     }
   },
-  
+
   "custom/power": {
     "format": "󰐥",
     "on-click": "~/.local/bin/power-menu.sh",
@@ -49,66 +43,66 @@
 
   "custom/keyboard": {
     "format": "{}",
-    "exec": "niri msg keyboard-layouts | grep '\\*' | awk '{print $3}' | cut -d'(' -f1",
+    "exec": "niri msg keyboard-layouts | grep '\\*' | awk '{print $3}' | sed 's/English.*/en/;s/Slovak/sk/'",
     "on-click": "niri msg action switch-layout next",
     "interval": 1,
     "tooltip": false
   },
 
-  "custom/bitcoin": {
-      "exec": "~/.local/bin/bitcoin.sh",
-      "format": "{}",
-      "interval": 180,  // Update every 5 minutes
-      "return-type": "json"
-  },
-
-  "network": {
-    "format-wifi": "󰤨 {essid}",
-    "format-ethernet": "󰈀 Wired",
-    "tooltip-format": "󰅧 {bandwidthUpBytes}  󰅢 {bandwidthDownBytes}",
-    "format-linked": "󱘖 {ifname} (No IP)",
-    "format-disconnected": "󰤭 Disconnected",
-    "format-alt": "󰤨 {signalStrength}%",
-    "interval": 1
+  "mpris": {
+    "format": "{status_icon}  {artist} — {title}",
+    "format-stopped": "",
+    "status-icons": {
+      "playing": "⏸",
+      "paused": "▶",
+      "stopped": "▶"
+    },
+    "max-length": 45,
+    "tooltip": true,
+    "tooltip-format": "{title}\n{artist}\n{album}"
   },
 
   "custom/mail": {
     "exec": "~/.local/bin/mail.sh",
     "interval": 300,
-    "format": "<span font_size='14pt' rise='-2500'></span> {}",
+    "format": "<span size='14pt'></span><span size='8pt'>{}</span>",
     "on-click": "thunderbird",
     "tooltip": "{} Unread messages",
     "return-type": ""
   },
-  
+
   "battery": {
     "states": {
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
-    "format-charging": "󰂄 {capacity}%",
+    "format": "{capacity} {icon}",
+    "format-charging": "{capacity} 󰂄",
+    "format-full": "{icon}",
+    "format-plugged": "{capacity} {icon}",
     "interval": 1,
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "tooltip": true
   },
 
-  "group/pulseaudio-wrapper": {
+  "group/outputs": {
     "orientation": "horizontal",
     "drawer": {
       "transition-duration": 300,
-      "children-class": "audio-hidden",
-      "transition-left-to-right": true,
+      "children-class": "outputs-hidden",
+      "transition-left-to-right": false,
       "click-to-reveal": true
     },
     "modules": [
+      "custom/outputs-toggle",
+      "custom/sound-settings",
       "pulseaudio",
       "pulseaudio/slider",
-      "custom/audio-mute",
-      "custom/audio-settings"
+      "backlight",
+      "backlight/slider"
     ]
   },
-  
+
   "pulseaudio": {
     "format": "{icon}",
     "format-muted": "󰖁",
@@ -122,29 +116,18 @@
       "default": ["󰕿", "󰖀", "󰕾"]
     },
     "tooltip": true,
-    "tooltip-format": "Volume: {volume}%"
+    "tooltip-format": "Volume: {volume}%",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
   },
-  
+
   "pulseaudio/slider": {
     "min": 0,
     "max": 100,
     "orientation": "horizontal"
   },
-  
-  "custom/audio-settings": {
-    "format": "",
-    "tooltip": true,
-    "tooltip-format": "Audio Settings",
-    "on-click": "pavucontrol"
-  },
-  
-  "custom/audio-mute": {
-    "format": "󰖁",
-    "tooltip": true,
-    "tooltip-format": "Toggle Mute",
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-  },
-  
+
   "temperature": {
     "critical-threshold": 80,
     "format": "{icon} {temperatureC}°C",
@@ -153,52 +136,72 @@
     "tooltip": true,
     "tooltip-format": "CPU Temperature: {temperatureC}°C"
   },
-  
+
   "custom/gpu-power": {
-    "format": " {}W",
+    "format": " {}W",
     "exec": "nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits",
     "tooltip": true,
     "tooltip-format": "GPU Power: {} Watts",
     "interval": 5
   },
-  
+
   "memory": {
     "format": "󰛨 {used:0.1f}G/{total:0.1f}G",
     "tooltip": true,
     "tooltip-format": "Memory: {used:0.2f}G/{total:0.2f}G"
   },
-  
+
   "cpu": {
     "format": "󰻠 {usage}%",
     "tooltip": true
   },
-  
+
   "clock": {
     "interval": 1,
-    "format": "󰃰 {:%d.%m %a %H:%M}",
+    "format": "{:%d.%m %a %H:%M}",
     "tooltip": true,
-    "tooltip-format": "{:L%A, %d-%m-%Y}"
-  },
-  
-  "tray": {
-    "icon-size": 14,
-    "spacing": 4
+    "tooltip-format": "{:L%A, %d-%m-%Y}",
+    "on-click": "gnome-calendar"
   },
 
-  "group/backlight-wrapper": {
+  "group/stats": {
     "orientation": "horizontal",
     "drawer": {
       "transition-duration": 300,
-      "children-class": "backlight-hidden",
-      "transition-left-to-right": true,
+      "children-class": "stats-hidden",
+      "transition-left-to-right": false,
       "click-to-reveal": true
     },
     "modules": [
-      "backlight",
-      "backlight/slider"
+      "custom/stats-toggle",
+      "custom/gpu-power",
+      "temperature",
+      "memory",
+      "cpu"
     ]
   },
-  
+
+  "custom/stats-toggle": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "custom/sound-settings": {
+    "format": "",
+    "on-click": "pavucontrol",
+    "tooltip": false
+  },
+
+  "custom/outputs-toggle": {
+    "format": "󰒓",
+    "tooltip": false
+  },
+
+  "tray": {
+    "icon-size": 15,
+    "spacing": 8
+  },
+
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon}",
@@ -212,17 +215,5 @@
     "max": 100,
     "orientation": "horizontal",
     "device": "intel_backlight"
-  },
-  
-  "bluetooth": {
-    "format": "󰂯 {status}",
-    "format-connected": "󰂱 {device_alias}",
-    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
-    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
-    "on-click": "bluetoothctl power off",
-    "on-click-right": "alacritty --class floating -e bluetuith"
   }
 }

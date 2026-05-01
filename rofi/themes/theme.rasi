@@ -17,11 +17,11 @@ configuration {
 
 /*****----- Global Properties -----*****/
 * {
-    font:                        "BlexMono Nerd Font Mono 12";
-    background:                  #3c3836;  /* Gruvbox bg1 - lighter than default */
-    background-alt:              #504945;  /* Gruvbox bg2 */
+    font:                        "Tabac Sans SemiBold 14";
+    background:                  #1d2021;  /* Gruvbox bg_hard */
+    background-alt:              #282828;  /* Gruvbox bg0 */
     foreground:                  #ebdbb2;  /* Gruvbox fg */
-    selected:                    #fe8019;  /* Gruvbox orange - primary accent */
+    selected:                    #d79921;  /* Gruvbox yellow */
     active:                      #83a598;  /* Gruvbox blue */
     urgent:                      #fb4934;  /* Gruvbox red */
 }
@@ -55,7 +55,7 @@ mainbox {
 imagebox {
     padding:                     20px;
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/images/d.png", height);
+    background-image:            url("~/.config/rofi/themes/Girl_with_a_Pearl_Earring.webp", height);
     orientation:                 vertical;
     children:                    [ "inputbar", "dummy", "mode-switcher" ];
 }
@@ -120,6 +120,7 @@ button selected {
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
+    border:                      0px;
     columns:                     1;
     lines:                       8;
     cycle:                       true;
@@ -199,6 +200,7 @@ element-text {
 /*****----- Message -----*****/
 message {
     background-color:            transparent;
+    border:                      0px;
 }
 textbox {
     padding:                     15px;
