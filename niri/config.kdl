@@ -107,7 +107,7 @@ input {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 12
+    gaps 8
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -224,7 +224,7 @@ hotkey-overlay {
 }
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
-spawn-at-startup "swaybg" "-i" "/home/jrosh/Pictures/gruvbox.jpg"
+spawn-at-startup "swaybg" "-i" "/home/jrosh/Pictures/Wallpapers/6-g.png"
 
 // Redshift
 spawn-at-startup "wlsunset" "-t" "5000" "-T" "7000" "-l" "49.2" "-L" "20.3" "-g" "0.8"
@@ -268,7 +268,7 @@ animations {
 
 // https://variety4me.github.io/niri_docs/Configuration-Switch-Events/
 switch-events {
-    lid-close { spawn "sh" "-c" "waylock && systemctl hibernate"; }
+    lid-close { spawn "sh" "-c" "waylock & systemctl hibernate"; }
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -296,8 +296,11 @@ window-rule {
 window-rule {
     open-maximized true
     match app-id=r#"^zen$"#
+    match app-id=r#"^org\.mozilla\.Thunderbird$"#
     match app-id=r#"^obsidian$"#  
     match app-id=r#"^org\.freedesktop\.Xwayland$"#
+    match app-id=r#"^org\.gnome\.Calculator"#
+    match app-id=r#"^gimp$"#
 }
 
 window-rule {
@@ -322,15 +325,15 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    //Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-config" "~/.config/rofi/themes/theme.rasi"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
+    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel" "--config" "/home/jrosh/.config/fuzzel/drun.ini"; }
+    // Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-config" "~/.config/rofi/dmenu.rasi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "waylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
-    // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
+    // Mod+T { spawn "bash" "-c" "notify-send hello && exec foot"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
@@ -532,12 +535,13 @@ binds {
     Mod+Z       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     
-    Mod+V {spawn "sh" "-c" "cliphist list | fuzzel --dmenu --with-nth=2 --width 80 | cliphist decode | wl-copy";}
+    Mod+V {spawn "sh" "-c" "cliphist list | fuzzel --config /home/jrosh/.config/fuzzel/generic.ini --dmenu --with-nth=2 | cliphist decode | wl-copy";}
     //Mod+V {spawn "cliphist" "list" "|" "fuzzel" "--dmenu" "|" "cliphist" "decode" "|" "wl-copy";}
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
     Mod+W { toggle-column-tabbed-display; }
+    Mod+Shift+W { spawn "sh" "-c" "~/.local/bin/wallpaper-cycle.sh"; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
@@ -552,6 +556,7 @@ binds {
     Alt+Print { screenshot-window; }
     Mod+Print { spawn "sh" "-c" "wl-paste | swappy -f - ";} // markup the image
     Alt+Return { spawn "sh" "-c" "~/.local/bin/ttsui-speak.sh"; }
+    Mod+P { spawn "sh" "-c" "~/.local/bin/niri-pick-color.sh";}
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
     // so they may, for example, forward the key presses as-is to a remote machine.

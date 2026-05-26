@@ -53,7 +53,7 @@
     "format": "{status_icon}  {artist} — {title}",
     "format-stopped": "",
     "status-icons": {
-      "playing": "⏸",
+      "playing": "॥",
       "paused": "▶",
       "stopped": "▶"
     },
@@ -160,8 +160,18 @@
     "interval": 1,
     "format": "{:%d.%m %a %H:%M}",
     "tooltip": true,
-    "tooltip-format": "{:L%A, %d-%m-%Y}",
-    "on-click": "gnome-calendar"
+    "on-click": "thunderbird -calendar",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "format": {
+        "months": "<span font_size='12pt' weight='300' color='#8ec07c'><i>{}</i></span>",
+        "days": "<span font_size='12pt' weight='400' color='#ebdbb2'>{}</span>",
+        "today": "<span font_size='16pt' weight='900' color='#cc241d'>{}</span>"
+      }
+    }
   },
 
   "group/stats": {

@@ -131,10 +131,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Common useful aliases (add more to ~/.bash_aliases for user-specific ones)
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -152,15 +148,6 @@ alias less='less -R'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-# Development shortcuts
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git log --oneline --graph --decorate'
-alias gd='git diff'
 
 # Extract function for various archive types
 extract() {
