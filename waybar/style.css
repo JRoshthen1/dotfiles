@@ -19,13 +19,12 @@
    ----------------------------------------------------------------------------- */
 
 #workspaces {
-  background-color: rgba(44, 42, 41, 0.85);
   background: transparent;
   border: none;
 }
 
 #workspaces button {
-  background: transparent;
+  background-color: rgba(44, 42, 41, 0.2);
   border: none;
   border-radius: 0;
   color: #928374;
@@ -35,11 +34,11 @@
 }
 
 #workspaces button:hover {
-  background-color: rgba(131, 165, 152, 0.2);
+  background-color: rgba(44, 42, 41, 0.3);
 }
 
 #workspaces button.active {
-  background-color: #83a598;
+  background-color: rgba(131, 165, 152, 0.6);
 }
 
 #workspaces button.urgent {
@@ -67,7 +66,7 @@
    RIGHT STRIP — all connected, no gaps
    ----------------------------------------------------------------------------- */
 #custom-mail,
-#custom-keyboard,
+#language,
 #custom-outputs-toggle,
 #custom-stats-toggle,
 #battery,
@@ -79,24 +78,29 @@
   padding: 0px 10px;
 }
 
-#tray{
+#tray {
   background-color: rgba(44, 42, 41, 0.85);
   margin: 0;
   padding: 0px 4px;
+}
+#tray * {
+  padding: 0 6px;
 }
 
 #custom-stats-toggle,
 #custom-outputs-toggle{
  font-size: 16px;
 }
-/* Left cap */
-/* #custom-mail {
-  letter-spacing: -12px;
-} */
 
 /* Right cap */
 #clock {
   color: #8ec07c;
+}
+
+#custom-spacer {
+  min-width: 64px;
+  padding: 0;
+  background: transparent;
 }
 
 /* -----------------------------------------------------------------------------
@@ -132,7 +136,7 @@
   padding: 0 6px;
 }
 
-#custom-keyboard {
+#language{
   font-size: 12px;
 }
 
@@ -242,13 +246,15 @@
 
 #custom-power:hover,
 #clock:hover,
-#custom-keyboard:hover,
+#language:hover,
 #custom-mail:hover,
 #custom-outputs-toggle:hover,
 #custom-stats-toggle:hover,
 #pulseaudio:hover,
 #custom-sound-settings:hover,
-#mpris:hover {
+#mpris:hover,
+#tray widget:hover
+{
   background-color: rgba(80, 73, 69, 0.9);
   transition: background-color 200ms ease;
 }
