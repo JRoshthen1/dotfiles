@@ -50,6 +50,21 @@
   color: #665c54;
 }
 
+.cffi-niri-windows .tile {
+  background-color: rgba(44, 42, 41, 0.2);
+}
+.cffi-niri-windows .tile:hover {
+  background-color: rgba(44, 42, 41, 0.3);
+}
+.cffi-niri-windows .tile:active {
+  background-color: rgba(131, 165, 152, 0.6);
+}
+.cffi-niri-windows .tile > * {
+  font-size: 1.5em;
+}
+.cffi-niri-windows .tile .urgent {
+  border: 1px solid #fb4934;
+}
 /* -----------------------------------------------------------------------------
    MPRIS — standalone pill, separated from the strip
    ----------------------------------------------------------------------------- */
@@ -97,7 +112,7 @@
   color: #8ec07c;
 }
 
-#custom-spacer {
+#custom-large-spacer {
   min-width: 64px;
   padding: 0;
   background: transparent;

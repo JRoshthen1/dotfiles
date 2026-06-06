@@ -6,6 +6,8 @@
   "fixed-center": false,
   "modules-left": [
     "niri/workspaces",
+    "custom/small-spacer",
+    "cffi/niri-windows"
   ],
   "modules-right": [
     "mpris",
@@ -17,13 +19,8 @@
     "battery",
     "clock",
     "custom/power",
-    "custom/spacer"
+    "custom/large-spacer"
   ],
-
-  "niri/language": {
-    "format-layout": "full_name",
-    "on-click": "niri msg action switch-layout next"
-  },
 
   "niri/workspaces": {
     "format": "{icon}",
@@ -40,12 +37,81 @@
       "default": "󰊠"
     }
   },
+  "cffi/niri-windows": {
+    // path where you placed the .so file
+    "module_path": "/home/jrosh/.config/waybar/waybar-niri-windows.so",
+    // configure the module's behavior
+    "options": {
+      // set the module mode
+      // "graphical" (default): draw a minimap of windows in the current workspace
+      // "text": draws symbols and a focus indicator for each column (mirrors v1 behavior)
+      "mode": "graphical",
 
-  "custom/power": {
-    "format": "󰐥",
-    "on-click": "~/.local/bin/power-menu.sh",
-    "tooltip": true,
-    "tooltip-format": "Power Menu"
+      // ======= graphical mode options =======
+      //  when to show floating windows
+      //   - "always": always show floating window view, even if there are no floating windows
+      //   - "auto" (default): show floating window view if there are floating windows on the current workspace
+      //   - "never": never show floating windows
+      "show-floating": "auto",
+      // pick where the floating windows be shown relative to tiled windows
+      //   - "left": show floating windows on the left
+      //   - "right" (default): show floating windows on the right
+      "floating-position": "right",
+      // set minimum size of windows, in pixels (default: 1, minimum: 1)
+      // if this value is too large to fit all windows (e.g. in a column with many windows),
+      // it will be reduced
+      // set spacing between windows/columns, in pixels (default: 1, minimum: 0)
+      // if this value is too large, it will be reduced
+      "spacing": 2,
+      // set minimum size of windows, in pixels, to draw icons for (default: 0, minimum: 0)
+      // if unset or 0, icons will only be drawn for tiled windows that are the only one in their column
+      // if 1+, icons will be drawn for all windows where w >= icon-minimum-size and h >= icon-minimum-size
+      // icons must be set in the "rules" section below for this to have any effect
+      "icon-minimum-size": 0,
+      // account for borders when calculating window sizes; see note below (default: 0, minimum: 0)
+      "column-borders": 0, // border on .column
+      "floating-borders": 0, // border on .floating
+      // trigger actions on tile click (see https://yalter.github.io/niri/niri_ipc/enum.Action.html for available actions)
+      // only actions that take a single window ID are supported
+      // set to an empty string to disable
+      "on-tile-click": "FocusWindow", // (default: FocusWindow)
+      "on-tile-middle-click": "CloseWindow", // (default: CloseWindow)
+      "on-tile-right-click": "", // (default: none)
+      // add CSS classes/icons to windows based on their App ID/Title (see `niri msg windows`)
+      // Go regular expression syntax is supported for app-id and title (see https://pkg.go.dev/regexp/syntax)
+      // rules are checked in the order they are defined - first match wins and checking stops
+      // set "continue" to true to also check and apply subsequent rules even if this rule matches
+      // if multiple rules with icons are applied, the first one will be used
+      // *icons are not drawn for floating windows by default*; set "icon-minimum-size" to enable (see above)
+      "rules": [
+        // .foot will be added to all windows with the App ID "foot"
+        //  will be drawn in windows that match
+        { "app-id": "foot", "class": "foot", "icon": "" },
+        // .firefox will be added to all windows with the App ID "firefox"
+        // subsequent rules are also checked and applied for firefox windows
+        { "app-id": "zen", "class": "zen", "icon": ""},
+        { "app-id": "codium", "class": "codium", "icon": ""},
+      ],
+
+      // ======= text mode options =======
+      // customize the symbols used to draw the columns/windows
+      "symbols": {
+        "unfocused": "⋅",
+        "focused": "⊙",
+        "unfocused-floating": "∗",
+        "focused-floating": "⊛",
+        // text to display when there are no windows on the current workspace
+        // if this is an empty string (default), the module will be hidden when there are no windows
+        "empty": ""
+      }
+    },
+    "actions": {
+      // use niri IPC action names to trigger them (see https://yalter.github.io/niri/niri_ipc/enum.Action.html for available actions)
+      // any action that has no fields is supported
+      "on-scroll-up": "FocusColumnLeft",
+      "on-scroll-down": "FocusColumnRight"
+      // in graphical mode, don't configure click actions here—they're handled by the module above
+    }
   },
 
   "mpris": {
@@ -68,6 +134,18 @@
     "on-click": "thunderbird",
     "tooltip": "{} Unread messages",
     "return-type": ""
+  },
+
+  "niri/language": {
+    "format-layout": "full_name",
+    "on-click": "niri msg action switch-layout next"
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "on-click": "~/.local/bin/power-menu.sh",
+    "tooltip": true,
+    "tooltip-format": "Power Menu"
   },
 
   "battery": {
@@ -227,7 +305,12 @@
     "device": "intel_backlight"
   },
 
-  "custom/spacer": {
+  "custom/small-spacer": {
+    "format": " ",
+    "tooltip": false
+  },
+
+  "custom/large-spacer": {
     "format": " ",
     "tooltip": false
   }
